@@ -36,19 +36,19 @@ return [
             'driver' => Hyperf\ConfigNacos\NacosDriver::class,
             'merge_mode' => Hyperf\ConfigNacos\Constants::CONFIG_MERGE_OVERWRITE,
             'interval' => 3,
-            'default_key' => '',
+            'default_key' => 'nacos_config',
             'listener_config' => [
                 // dataId, group, tenant, type, content
-                 'database' => [
-                     'tenant' => '3aa74d23-ed62-4acf-ba8e-af9bf0d464e5', // 命名空间ID
-                     'data_id' => 'database',
-                     'group' => 'DEV',
+                 'nacos_config' => [
+                     'tenant' => '613b450c-7902-47b5-9162-5e7c65a2eee0', // 命名空间ID
+                     'data_id' => 'test',
+                     'group' => 'DEFAULT_GROUP',
                      'type' => 'json',
                  ],
             ],
             'client' => [
                 // nacos server url like https://nacos.hyperf.io, Priority is higher than host:port
-                'host' => '192.168.1.22',
+                'host' => '192.168.31.136',
                 'port' => 8848,
                 'username' => 'nacos',
                 'password' => 'nacos',

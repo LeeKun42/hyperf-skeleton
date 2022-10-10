@@ -12,12 +12,14 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Exception\ApiException;
+use App\JsonRpc\CalculatorServiceInterface;
 use App\Model\AdminUser;
 use Carbon\Carbon;
 use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Annotation\RequestMapping;
 use Hyperf\Kafka\Producer;
 use Hyperf\Logger\LoggerFactory;
+use Hyperf\Utils\ApplicationContext;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -38,15 +40,17 @@ class IndexController extends AbstractController
     /**
      * @RequestMapping(path="index", methods="get,post")
      */
-    public function index(Producer $producer)
+    public function index()
     {
         $method = $this->request->getMethod();
         $this->logger->info('test log', [111]);
-        $user = AdminUser::where('id', 1)->first();
+        $client = ApplicationContext::getContainer()->get(CalculatorServiceInterface::class);
+        $res = $client->add(5, 3);
         return [
             'method' => $method,
             'datetime' => Carbon::now()->toDateTimeString(),
-            'kafka' => config('database'),
+            'rpc_add_result' => $res,
+            'nacos' => config('nacos_config'),
         ];
     }
 
